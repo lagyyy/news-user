@@ -68,10 +68,10 @@
 			// 获取评论
 			async getComment(articleId) {
 				const res = await this.$request({
-					url: 'comment/oneComments',
-					data: {
-						articleId: articleId
-					},
+					url: 'comment/oneComments/1/1',
+					// data: {
+					// 	articleId: articleId
+					// },
 					method: 'GET'
 				})
 				console.log(res.data.data)

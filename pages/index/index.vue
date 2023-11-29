@@ -23,9 +23,9 @@
 				<swiper-item v-for="(listItem,listIndex) in articleList" :key="listIndex">
 					<scroll-view style="height: 100%;" scroll-y="true" @scrolltolower="lowerBot" scroll-with-animation>
 						<view class='content'>
-							<view v-if="listIndex == 0">
-								<view v-for="i in 5">
-									<article-one :list="[]"></article-one>
+							<view>
+								<view v-for="i in listItem">
+									<article-one :article="i"></article-one>
 								</view>
 							</view>
 						</view>
@@ -46,6 +46,11 @@
 	export default {
 		data() {
 			return {
+				current: 1,
+				limit: 10,
+				newsQuery: {
+
+				},
 				Component: {
 					// article
 				},
@@ -83,9 +88,21 @@
 			}
 		},
 		onLoad() {
-
+			this.init()
 		},
 		methods: {
+			async init() {
+				console.log("__")
+				const res = await this.$request({
+					url: 'news/newsPageCondition/' + this.current + "/" + this.limit,
+					method: 'POST'
+				})
+				console.log(res.data)
+				if (res.data.code == 200) {
+					console.log(res.data.data)
+					this.articleList = res.data.data
+				}
+			},
 			changeTab(index) {
 				this.currentTab = index
 			},

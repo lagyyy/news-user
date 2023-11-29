@@ -1,14 +1,14 @@
 <template>
 	<view>
-
-		<view class="u-page">
+		<view class="u-page" v-if="article">
 			<view class="album">
 				<view class="album__avatar">
-					<image src="/static/logo.png" mode="" style="width: 32px;height: 32px;"></image>
+					<image :src="article.avatar" mode="" style="width: 32px;height: 32px;"></image>
 				</view>
 				<view class="album__content" @click="goPage">
-					<u--text text="Origin" type="primary" bold size="15"></u--text>
-					<u--text margin="0 0 8px 0" text="全面的组件和便捷的工具会让您信手拈来，如鱼得水"></u--text>
+					<u--text :text="article.nickName" type="primary" bold size="15"></u--text>
+					<u--text :text="article.publishDate" type="primary" size="1"></u--text>
+					<u--text margin="0 0 8px 0" :text="article.content"></u--text>
 					<u-album :urls="urls2"></u-album>
 				</view>
 			</view>
@@ -45,6 +45,7 @@
 		name: "article-one",
 		props: {
 			list: Array,
+			article: Object,
 		},
 		data() {
 			return {
@@ -74,7 +75,8 @@
 					return;
 				}
 				uni.navigateTo({
-					url: '/pages/article/details/details'
+					// url: '/pages/article/details/details',
+					url: `/pages/article/details/details?item=${this.article.id}`
 				})
 			}
 		}
